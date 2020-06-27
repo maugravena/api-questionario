@@ -3,7 +3,7 @@ require 'rails_helper'
 describe 'api create new question and answers' do
   it 'successfully' do
     user = User.create(name: 'Teste', email: 'teste@email.com')
-    quiz = Quiz.create(name: 'Novo questonário', description: 'Questionário para novas perguntas', limit_time: 10, user_id: user.id)
+    quiz = Quiz.create(name: 'Novo questionário', description: 'Questionário para novas perguntas', limit_time: 10, user_id: user.id)
 
     post api_v1_questions_path,
     params: { question: { quiz_id: quiz.id, description: 'Qual a origem da vida?', points: 100,
@@ -18,7 +18,7 @@ describe 'api create new question and answers' do
 
   it 'and request must have all attributes' do
     user = User.create(name: 'Teste', email: 'teste@email.com')
-    quiz = Quiz.create(name: 'Novo questonário', description: 'Questionário para novas perguntas', limit_time: 10, user_id: user.id)
+    quiz = Quiz.create(name: 'Novo questionário', description: 'Questionário para novas perguntas', limit_time: 10, user_id: user.id)
 
     post api_v1_questions_path,
     params: { question: { quiz_id: nil, description: '', points: nil,
