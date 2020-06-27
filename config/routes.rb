@@ -1,11 +1,11 @@
 Rails.application.routes.draw do
   namespace :api, defaults: { format: 'json' } do
     namespace :v1 do
-      resources :users, only: %i[create] do
-        resources :quizzes, only: %i[create]
+      resources :users, path: 'usuario', only: %i[create] do
+        resources :quizzes, path: 'questionario', only: %i[create]
       end
 
-      resources :questions, only: %i[create]
+      resources :questions, path: 'questao', only: %i[create]
     end
   end
 end
