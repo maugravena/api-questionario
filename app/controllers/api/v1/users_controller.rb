@@ -1,6 +1,6 @@
 module Api
   module V1
-    class UsersController < ApplicationController
+    class UsersController < ApiController
       def create
         @user = User.create!(user_params)
         render json: { user: @user.name }, status: :created
