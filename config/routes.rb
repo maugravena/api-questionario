@@ -4,6 +4,8 @@ Rails.application.routes.draw do
       resources :users, only: %i[create] do
         resources :quizzes, only: %i[create]
       end
+
+      resources :questions, only: %i[create]
     end
   end
 end
