@@ -22,8 +22,11 @@ describe 'api create new question and answers' do
 
     post api_v1_questions_path,
     params: { question: { quiz_id: nil, description: '', points: nil,
-    answers_attributes: [{}]}}
+    answers_attributes: [{description: '', correct: nil}]}}
+
+    json_client = JSON.parse(response.body, symbolize_names: true)
 
     expect(response).to have_http_status 412
+    expect(json_client[:message]).to eq 'A validação falhou: Answers description não pode ficar em branco, Answers correct não pode ficar em branco, Quiz é obrigatório(a), Description não pode ficar em branco, Points não pode ficar em branco'
   end
 end

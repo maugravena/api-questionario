@@ -1,0 +1,12 @@
+---
+pt-BR:
+  activerecord:
+    errors:
+      messages:
+        record_invalid: 'A validação falhou: %{errors}'
+  errors:
+    messages:
+      blank: não pode ficar em branco
+      invalid: não é válido
+      required: é obrigatório(a)
+      taken: já está em uso

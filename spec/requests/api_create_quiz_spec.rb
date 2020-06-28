@@ -20,7 +20,10 @@ describe 'api user create new quiz' do
     post api_v1_user_quizzes_path(user),
          params: { name: '', description: '', limit_time: nil}
 
+    json_client = JSON.parse(response.body, symbolize_names: true)
+
     expect(response).to have_http_status 412
+    expect(json_client[:message]).to eq 'A validação falhou: Name não pode ficar em branco, Description não pode ficar em branco, Limit time não pode ficar em branco'
   end
 
   it 'and the name must be unique' do
@@ -28,8 +31,11 @@ describe 'api user create new quiz' do
     quiz = Quiz.create(name: 'Novo questionário', description: 'Questionário para novas perguntas', limit_time: 10, user_id: user.id)
 
     post api_v1_user_quizzes_path(user),
-        params: { name: 'Novo questionário', description: 'Vai da ruim', limit_time: 15 }
+    params: { name: 'Novo questionário', description: 'Vai da ruim', limit_time: 15 }
+
+    json_client = JSON.parse(response.body, symbolize_names: true)
 
     expect(response).to have_http_status 412
+    expect(json_client[:message]).to eq 'A validação falhou: Name já está em uso'
   end
 end
