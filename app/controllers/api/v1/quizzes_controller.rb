@@ -3,7 +3,7 @@ module Api
     class QuizzesController < ApiController
       def create
         @quiz = Quiz.create!(quiz_params)
-        render json:  @quiz, status: :created
+        render json: @quiz, status: :created
       end
 
       private

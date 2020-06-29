@@ -2,6 +2,7 @@ require:
   - rubocop-rails
 
 AllCops:
+  NewCops: enable
   TargetRubyVersion: 2.7.1
   Exclude:
     - 'bin/**/*'
@@ -11,17 +12,17 @@ AllCops:
     - 'script/**/*'
     - 'spec/rails_helper.rb'
 
-Documentation:
+Style/AsciiComments:
+  Enabled: false
+
+Style/Documentation:
   Enabled: false
 
 Style/FrozenStringLiteralComment:
   Enabled: false
 
-Metrics/BlockLength:
-  ExcludedMethods: ['describe', 'context', 'feature', 'scenario', 'let']
-
-Metrics/LineLength:
+Layout/LineLength:
   Max: 80
 
-AsciiComments:
-  Enabled: false
+Metrics/BlockLength:
+  ExcludedMethods: ['describe', 'context', 'feature', 'scenario', 'let']

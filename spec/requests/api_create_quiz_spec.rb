@@ -5,7 +5,9 @@ describe 'api user create new quiz' do
     user = User.create(name: 'Teste', email: 'teste@teste.com')
 
     post api_v1_user_quizzes_path(user),
-         params: { name: 'teste', description: 'Uma descrição para questionário', limit_time: 15 }
+         params: { name: 'teste',
+                   description: 'Uma descrição para questionário',
+                   limit_time: 15 }
 
     json_client = JSON.parse(response.body, symbolize_names: true)
 
@@ -18,7 +20,7 @@ describe 'api user create new quiz' do
     user = User.create(name: 'Teste', email: 'teste@teste.com')
 
     post api_v1_user_quizzes_path(user),
-         params: { name: '', description: '', limit_time: nil}
+         params: { name: '', description: '', limit_time: nil }
 
     json_client = JSON.parse(response.body, symbolize_names: true)
 
@@ -28,14 +30,18 @@ describe 'api user create new quiz' do
 
   it 'and the name must be unique' do
     user = User.create(name: 'Teste', email: 'teste@teste.com')
-    quiz = Quiz.create(name: 'Novo questionário', description: 'Questionário para novas perguntas', limit_time: 10, user_id: user.id)
+    Quiz.create(name: 'Novo questionário',
+                description: 'Questionário para novas perguntas',
+                limit_time: 10, user_id: user.id)
 
     post api_v1_user_quizzes_path(user),
-    params: { name: 'Novo questionário', description: 'Vai da ruim', limit_time: 15 }
+         params: { name: 'Novo questionário',
+                   description: 'Vai da ruim', limit_time: 15 }
 
     json_client = JSON.parse(response.body, symbolize_names: true)
 
+    error_message = 'A validação falhou: Name já está em uso'
     expect(response).to have_http_status 412
-    expect(json_client[:message]).to eq 'A validação falhou: Name já está em uso'
+    expect(json_client[:message]).to eq error_message
   end
 end
