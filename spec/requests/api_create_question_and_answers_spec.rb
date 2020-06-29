@@ -39,4 +39,29 @@ describe 'api create new question and answers' do
     expect(response).to have_http_status 412
     expect(json_client[:message]).to eq 'A validação falhou: Answers description não pode ficar em branco, Quiz é obrigatório(a), Description não pode ficar em branco, Points não pode ficar em branco'
   end
+
+  it 'can have a maximum of five answers' do
+    user = User.create(name: 'Teste', email: 'teste@email.com')
+    quiz = Quiz.create(name: 'Novo questionário',
+                       description: 'Questionário para novas perguntas',
+                       limit_time: 10, user_id: user.id)
+
+    post api_v1_quiz_questions_path(quiz),
+         params: { question: { quiz_id: quiz.id,
+                               description: 'Pergunta com muitas respostas?',
+                               points: 10,
+                               answers_attributes: [
+                                 { description: 'Resposta boa', correct: true },
+                                 { description: 'Resposta ruim', correct: false },
+                                 { description: 'Resposta legal', correct: false },
+                                 { description: 'Resposta talvez', correct: false },
+                                 { description: 'Resposta pegadinha', correct: false },
+                                 { description: 'Resposta vai saber', correct: false }
+                               ] } }
+
+    json_client = JSON.parse(response.body, symbolize_names: true)
+byebug
+    expect(response).to have_http_status 412
+    expect(json_client[:message]).to eq 'São permitidos no máximo 5 registros de respostas'
+  end
 end
