@@ -60,7 +60,7 @@ describe 'api create new question and answers' do
                                ] } }
 
     json_client = JSON.parse(response.body, symbolize_names: true)
-byebug
+
     expect(response).to have_http_status 412
     expect(json_client[:message]).to eq 'São permitidos no máximo 5 registros de respostas'
   end
